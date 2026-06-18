@@ -1,29 +1,50 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Nav, Hero, Footer } from "@/components/gdaf/chrome";
+import { CrisisSection, WhyFailsSection } from "@/components/gdaf/crisis";
+import {
+  ModelSection,
+  FinancialArchitectureSection,
+  SeparatePoolsSection,
+  MoneyChainSection,
+} from "@/components/gdaf/model";
+import { YearSimulationSection } from "@/components/gdaf/year-simulation";
+import { TurkeyGazaSection } from "@/components/gdaf/turkey-gaza";
+import { ScenariosSection } from "@/components/gdaf/scenarios";
+import { ImpactSection, TechnicalAppendixSection } from "@/components/gdaf/impact";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Your App" },
-      { name: "description", content: "Replace this with a one-sentence description of your app." },
-      { property: "og:title", content: "Your App" },
-      { property: "og:description", content: "Replace this with a one-sentence description of your app." },
+      { title: "GDAF Impact Simulator — Gazze Dirençli Altyapı Fonu" },
+      {
+        name: "description",
+        content:
+          "Katılım finans temelli WASH yeniden yapılanma modeli için interaktif jüri sunum prototipi.",
+      },
     ],
   }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-background text-foreground">
+      <Nav />
+      <main>
+        <Hero />
+        <CrisisSection />
+        <WhyFailsSection />
+        <ModelSection />
+        <FinancialArchitectureSection />
+        <SeparatePoolsSection />
+        <MoneyChainSection />
+        <YearSimulationSection />
+        <TurkeyGazaSection />
+        <ScenariosSection />
+        <ImpactSection />
+        <TechnicalAppendixSection />
+      </main>
+      <Footer />
     </div>
   );
 }
