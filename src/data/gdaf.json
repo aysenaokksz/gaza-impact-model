@@ -1,0 +1,1077 @@
+{
+  "project": {
+    "name_tr": "Gazze Dirençli Altyapı Fonu",
+    "name_en": "Gaza Resilient Infrastructure Fund",
+    "short_name": "GDAF",
+    "domain": "WASH: temiz su, sanitasyon ve güneş destekli altyapı",
+    "site_concept": "GDAF Impact Simulator",
+    "prototype_note": "Bu çalışma gerçek operasyonel sistem değil; jüri sunumu ve teknik ek için statik verili interaktif prototiptir. Sayılar rapor verisi veya temsili senaryo varsayımı olarak etiketlenmelidir."
+  },
+  "crisis_metrics": {
+    "total_population": {
+      "value": 2130000,
+      "unit": "kişi",
+      "year": 2025,
+      "source": "PCBS"
+    },
+    "displaced_population": {
+      "value": 1900000,
+      "unit": "kişi",
+      "year": 2025,
+      "source": "OCHA"
+    },
+    "children_0_18": {
+      "value": 1090000,
+      "unit": "kişi",
+      "year": 2025,
+      "source": "PCBS"
+    },
+    "people_under_6L_daily_water": {
+      "value": 1000000,
+      "unit": "kişi",
+      "year": 2025,
+      "source": "OCHA"
+    },
+    "pregnant_lactating_women_at_risk": {
+      "value": 60000,
+      "unit": "kişi",
+      "year": 2025,
+      "source": "PCBS/UNICEF"
+    },
+    "population_change_2_years": {
+      "value": -10.6,
+      "unit": "%",
+      "year": 2025,
+      "source": "PCBS"
+    },
+    "non_potable_water_ratio": {
+      "value": 97,
+      "unit": "%",
+      "year": 2025,
+      "source": "WHO/OCHA"
+    },
+    "drinking_water_access_barrier": {
+      "value": 92,
+      "unit": "%",
+      "year": 2025,
+      "source": "WASH R3"
+    },
+    "domestic_water_access_barrier": {
+      "value": 89,
+      "unit": "%",
+      "year": 2025,
+      "source": "WASH R3"
+    }
+  },
+  "water_access": {
+    "median_daily_water_per_person": {
+      "value": 6.1,
+      "unit": "L/kişi/gün",
+      "year": 2025,
+      "source": "WASH R3"
+    },
+    "who_emergency_minimum": {
+      "value": 15,
+      "unit": "L/kişi/gün",
+      "source": "WHO"
+    },
+    "who_long_term_standard": {
+      "value": 100,
+      "unit": "L/kişi/gün",
+      "source": "WHO"
+    },
+    "prewar_daily_water_per_person": {
+      "value": 82.7,
+      "unit": "L/kişi/gün",
+      "year": 2023,
+      "source": "Oxfam"
+    },
+    "under_6L_ratio_all_gaza": {
+      "value": 49.4,
+      "unit": "%",
+      "year": 2025,
+      "source": "WASH R3"
+    },
+    "under_6L_ratio_middle_area": {
+      "value": 42.5,
+      "unit": "%",
+      "year": 2025,
+      "source": "WASH R3"
+    },
+    "under_6L_ratio_gaza_city": {
+      "value": 47.5,
+      "unit": "%",
+      "year": 2025,
+      "source": "WASH R3"
+    },
+    "under_6L_ratio_khan_younis": {
+      "value": 58.2,
+      "unit": "%",
+      "year": 2025,
+      "source": "WASH R3"
+    },
+    "treated_grid_water_price_increase": {
+      "value": 5,
+      "unit": "kat",
+      "year": 2025,
+      "source": "AB WASH Raporu"
+    },
+    "water_distribution_points": {
+      "value": 1300,
+      "unit": "nokta+",
+      "year": 2026,
+      "source": "WASH Cluster"
+    },
+    "daily_drinking_water_distribution": {
+      "value": 27459,
+      "unit": "m3/gün",
+      "year": 2026,
+      "source": "WASH Cluster"
+    },
+    "active_wash_partners": {
+      "value": 35,
+      "unit": "kuruluş+",
+      "year": 2026,
+      "source": "WASH Cluster"
+    },
+    "water_access_barriers": [
+      {
+        "barrier": "Su depolama kabı yetersizliği",
+        "value": 26,
+        "unit": "%",
+        "source": "WASH R3"
+      },
+      {
+        "barrier": "Elektrik/güç yokluğu",
+        "value": 26,
+        "unit": "%",
+        "source": "WASH R3"
+      },
+      {
+        "barrier": "Düzensiz su temini",
+        "value": 23,
+        "unit": "%",
+        "source": "WASH R3"
+      }
+    ],
+    "water_quality": [
+      {
+        "indicator": "Fekal koliform pozitif örnek",
+        "value": 41,
+        "unit": "%",
+        "year": 2024,
+        "source": "Consensus 2024"
+      },
+      {
+        "indicator": "E. coli pozitif örnek",
+        "value": 20,
+        "unit": "%",
+        "year": 2024,
+        "source": "Consensus 2024"
+      },
+      {
+        "indicator": "TDS sınırı aşan örnek",
+        "value": 42,
+        "unit": "%",
+        "year": 2024,
+        "source": "Consensus 2024"
+      },
+      {
+        "indicator": "Klor eşiği altında örnek",
+        "value": 79,
+        "unit": "%",
+        "year": 2024,
+        "source": "Consensus 2024"
+      }
+    ]
+  },
+  "governorate_data": [
+    {
+      "area": "Tüm Gaza",
+      "under_6L_pct": 49.4,
+      "sick_household_pct": 47.9,
+      "insufficient_toilet_pct": 73.9,
+      "open_defecation_pct": 21.3,
+      "soap_unavailable_pct": 62.9,
+      "environmental_threat_pct": 84.5,
+      "lat": 31.35,
+      "lon": 34.31,
+      "source": "WASH R3"
+    },
+    {
+      "area": "Middle Area",
+      "under_6L_pct": 42.5,
+      "sick_household_pct": 42.9,
+      "insufficient_toilet_pct": 58.9,
+      "open_defecation_pct": 18.8,
+      "soap_unavailable_pct": 62.3,
+      "environmental_threat_pct": 69.7,
+      "lat": 31.41,
+      "lon": 34.35,
+      "source": "WASH R3"
+    },
+    {
+      "area": "Gaza City",
+      "under_6L_pct": 47.5,
+      "sick_household_pct": 41.2,
+      "insufficient_toilet_pct": 72.0,
+      "open_defecation_pct": 14.2,
+      "soap_unavailable_pct": 55.1,
+      "environmental_threat_pct": 87.9,
+      "lat": 31.52,
+      "lon": 34.46,
+      "source": "WASH R3"
+    },
+    {
+      "area": "Khan Younis",
+      "under_6L_pct": 58.2,
+      "sick_household_pct": 64.0,
+      "insufficient_toilet_pct": 89.5,
+      "open_defecation_pct": 35.8,
+      "soap_unavailable_pct": 77.1,
+      "environmental_threat_pct": 90.5,
+      "lat": 31.34,
+      "lon": 34.31,
+      "source": "WASH R3"
+    },
+    {
+      "area": "Deir Al-Balah",
+      "under_6L_pct": 42.5,
+      "sick_household_pct": 42.9,
+      "insufficient_toilet_pct": 58.9,
+      "open_defecation_pct": 4.0,
+      "soap_unavailable_pct": 62.0,
+      "environmental_threat_pct": 69.7,
+      "lat": 31.41,
+      "lon": 34.35,
+      "source": "WASH R3 Aug 2025"
+    }
+  ],
+  "infrastructure_damage": {
+    "damaged_destroyed_wash_infrastructure": {
+      "value": 80,
+      "unit": "%",
+      "year": 2026,
+      "source": "MSF/Oxfam"
+    },
+    "inaccessible_nonfunctional_wells": {
+      "value": 66,
+      "unit": "%",
+      "year": 2025,
+      "source": "UNOSAT"
+    },
+    "damaged_main_wash_facilities": {
+      "value": 49.8,
+      "unit": "%",
+      "year": 2025,
+      "source": "UNOSAT/OCHA"
+    },
+    "operating_wastewater_treatment_plants": {
+      "value": 0,
+      "unit": "adet",
+      "year": 2025,
+      "source": "OCHA"
+    },
+    "untreated_sewage_discharge": {
+      "value": 108000,
+      "unit": "m3/gün",
+      "year": 2024,
+      "source": "RAND"
+    },
+    "wash_damage_cost_irdna": {
+      "value": 503700000,
+      "unit": "USD",
+      "year": 2024,
+      "source": "Dünya Bankası"
+    },
+    "wash_urgent_reconstruction": {
+      "value": 200000000,
+      "unit": "USD",
+      "year": 2026,
+      "source": "Consensus 2024"
+    },
+    "wash_long_term_reconstruction": {
+      "value": 500000000,
+      "unit": "USD",
+      "year": 2026,
+      "source": "Consensus 2024"
+    },
+    "wash_sector_total_reconstruction_need": {
+      "value": 2700000000,
+      "unit": "USD",
+      "year": 2026,
+      "source": "BM/OCHA"
+    },
+    "physical_infrastructure_damage": {
+      "value": 18500000000,
+      "unit": "USD",
+      "year": 2024,
+      "source": "Dünya Bankası"
+    },
+    "total_reconstruction_need_un": {
+      "value": 70000000000,
+      "unit": "USD",
+      "year": 2026,
+      "source": "BM"
+    }
+  },
+  "health_indicators": [
+    {
+      "indicator": "Akut sulu ishal vakası",
+      "value": 500000,
+      "unit": "vaka+",
+      "year": 2024,
+      "source": "OCHA"
+    },
+    {
+      "indicator": "Hepatit A vakası",
+      "value": 40000,
+      "unit": "vaka",
+      "year": 2024,
+      "source": "OCHA/UNRWA"
+    },
+    {
+      "indicator": "Kanlı ishal oranı",
+      "value": 2.9,
+      "unit": "%",
+      "year": 2024,
+      "source": "WASH Cluster"
+    },
+    {
+      "indicator": "Polio aşı kapsama, Kuzey Gaza",
+      "value": 88,
+      "unit": "%",
+      "year": 2024,
+      "source": "Perlman 2025"
+    },
+    {
+      "indicator": "İshal yaygınlığı artışı",
+      "value": 44,
+      "unit": "%",
+      "year": 2025,
+      "source": "WHO EWARS"
+    },
+    {
+      "indicator": "Kamp akut solunum yolu enfeksiyonu oranı",
+      "value": 49.3,
+      "unit": "%",
+      "year": 2025,
+      "source": "Consensus"
+    },
+    {
+      "indicator": "Kamp ishal oranı",
+      "value": 24.9,
+      "unit": "%",
+      "year": 2025,
+      "source": "Consensus"
+    },
+    {
+      "indicator": "Kamp akut viral hepatit",
+      "value": 5.6,
+      "unit": "%",
+      "year": 2025,
+      "source": "Consensus"
+    },
+    {
+      "indicator": "Akut malnütrisyon, çocuk",
+      "value": 37000,
+      "unit": "çocuk",
+      "year": 2025,
+      "source": "UNICEF/IPC"
+    },
+    {
+      "indicator": "Ağır akut malnütrisyon",
+      "value": 6100,
+      "unit": "çocuk",
+      "year": 2025,
+      "source": "UNICEF/IPC"
+    },
+    {
+      "indicator": "Açık defekasyon",
+      "value": 21.3,
+      "unit": "%",
+      "year": 2025,
+      "source": "WASH R3"
+    },
+    {
+      "indicator": "Çevresel tehdit altında hane",
+      "value": 84.5,
+      "unit": "%",
+      "year": 2025,
+      "source": "WASH R3"
+    },
+    {
+      "indicator": "Sabun erişilebilirliği",
+      "value": 37,
+      "unit": "%",
+      "year": 2025,
+      "source": "OCHA"
+    },
+    {
+      "indicator": "Su kaynaklı hastalık payı",
+      "value": 25,
+      "unit": "% tüm hastalıklar",
+      "year": 2024,
+      "source": "RAND"
+    }
+  ],
+  "priority_needs_distribution_pct": [
+    {
+      "need": "Güvenlik",
+      "all_gaza": 24.4,
+      "middle_area": 35.7,
+      "gaza_city": 28.3,
+      "khan_younis": 8.4,
+      "source": "WASH R3"
+    },
+    {
+      "need": "Gıda",
+      "all_gaza": 19.4,
+      "middle_area": 19.1,
+      "gaza_city": 24.5,
+      "khan_younis": 10.7,
+      "source": "WASH R3"
+    },
+    {
+      "need": "Hijyen",
+      "all_gaza": 18.4,
+      "middle_area": 10.8,
+      "gaza_city": 15.3,
+      "khan_younis": 30.0,
+      "source": "WASH R3"
+    },
+    {
+      "need": "İçme suyu",
+      "all_gaza": 15.7,
+      "middle_area": 13.2,
+      "gaza_city": 14.7,
+      "khan_younis": 19.5,
+      "source": "WASH R3"
+    },
+    {
+      "need": "Nakit",
+      "all_gaza": 9.1,
+      "middle_area": 9.4,
+      "gaza_city": 9.1,
+      "khan_younis": 8.8,
+      "source": "WASH R3"
+    },
+    {
+      "need": "Barınak malzemeleri",
+      "all_gaza": 3.3,
+      "middle_area": 1.7,
+      "gaza_city": 1.0,
+      "khan_younis": 8.8,
+      "source": "WASH R3"
+    },
+    {
+      "need": "Geçim desteği",
+      "all_gaza": 2.8,
+      "middle_area": 3.2,
+      "gaza_city": 1.5,
+      "khan_younis": 4.8,
+      "source": "WASH R3"
+    },
+    {
+      "need": "Evsel su",
+      "all_gaza": 1.5,
+      "middle_area": 2.9,
+      "gaza_city": 0.7,
+      "khan_younis": 1.7,
+      "source": "WASH R3"
+    },
+    {
+      "need": "Su kabı",
+      "all_gaza": 0.9,
+      "middle_area": 0.9,
+      "gaza_city": 0.2,
+      "khan_younis": 2.1,
+      "source": "WASH R3"
+    },
+    {
+      "need": "Sağlık hizmetleri",
+      "all_gaza": 1.1,
+      "middle_area": 0.8,
+      "gaza_city": 0.8,
+      "khan_younis": 1.9,
+      "source": "WASH R3"
+    },
+    {
+      "need": "Diğer",
+      "all_gaza": 3.5,
+      "middle_area": 2.3,
+      "gaza_city": 4.0,
+      "khan_younis": 3.3,
+      "source": "WASH R3"
+    }
+  ],
+  "financial_architecture": {
+    "initial_fund_size": {
+      "value": 200000000,
+      "unit": "USD",
+      "label": "200 mn $",
+      "note": "Faz 1 varsayımsal büyüklük"
+    },
+    "source_allocation": [
+      {
+        "source": "Vakıf sermayesi",
+        "amount_usd": 100000000,
+        "amount_label": "100 mn $",
+        "share_pct": 50,
+        "nature": "Dokunulmaz ana para; yalnızca getirisi kullanılır"
+      },
+      {
+        "source": "Sosyal etkili sukuk",
+        "amount_usd": 50000000,
+        "amount_label": "50 mn $",
+        "share_pct": 25,
+        "nature": "İlk ihraç: üretim/tedarik tesisi + cihaz havuzu"
+      },
+      {
+        "source": "Kitle fonlaması",
+        "amount_usd": 20000000,
+        "amount_label": "20 mn $",
+        "share_pct": 10,
+        "nature": "Müşareke; mikro varlık ortaklığı, kâr paylaşımı"
+      },
+      {
+        "source": "Hibe / teberru",
+        "amount_usd": 20000000,
+        "amount_label": "20 mn $",
+        "share_pct": 10,
+        "nature": "Karşılıksız; acil sosyal hizmet ve ilk kurulum"
+      },
+      {
+        "source": "Karz-ı hasen",
+        "amount_usd": 10000000,
+        "amount_label": "10 mn $",
+        "share_pct": 5,
+        "nature": "Faizsiz borç; yalnızca anapara geri döner"
+      }
+    ],
+    "use_of_funds": [
+      {
+        "use": "Vakıf sermayesi (korunan)",
+        "amount_usd": 100000000,
+        "share_pct": 50,
+        "note": "Harcanmaz; yalnızca getirisi kullanılır"
+      },
+      {
+        "use": "Üretim/tedarik tesisi + cihaz havuzu",
+        "amount_usd": 50000000,
+        "share_pct": 25,
+        "note": "Sukukla finanse edilir"
+      },
+      {
+        "use": "Mikro varlıklar (modüler)",
+        "amount_usd": 20000000,
+        "share_pct": 10,
+        "note": "Müşareke ile finanse edilir"
+      },
+      {
+        "use": "Nakit rezerv hesabı (DSRA)",
+        "amount_usd": 15000000,
+        "share_pct": 7.5,
+        "note": "Likidite kesintilerine karşı tampon"
+      },
+      {
+        "use": "Sosyal hizmet fonu",
+        "amount_usd": 10000000,
+        "share_pct": 5,
+        "note": "Ücretsiz su, hijyen, acil insani destek"
+      },
+      {
+        "use": "Tekafül havuzu",
+        "amount_usd": 5000000,
+        "share_pct": 2.5,
+        "note": "Operasyonel risk: ekipman, bakım"
+      }
+    ],
+    "separate_pools": [
+      {
+        "pool": "Sukuk havuzu",
+        "amount": "50 mn $",
+        "asset": "Üretim/tedarik tesisi ve cihaz portföyü",
+        "revenue_right": "Cihaz satışı, kira ve hizmet alım gelirleri yalnızca sukuk yatırımcısına dağıtılır"
+      },
+      {
+        "pool": "Müşareke havuzu",
+        "amount": "20 mn $",
+        "asset": "Mikro modüler varlıklar",
+        "revenue_right": "Gelir yalnızca kitle fonlaması yatırımcılarına aittir; sukuk havuzuna aktarılamaz"
+      },
+      {
+        "pool": "Vakıf havuzu",
+        "amount": "100 mn $",
+        "asset": "Korunan vakıf anaparası",
+        "revenue_right": "Yıllık %5 getiri işletme giderleri, rezerv ve sosyal hizmete aktarılır"
+      },
+      {
+        "pool": "Hibe + karz-ı hasen sosyal katmanı",
+        "amount": "30 mn $",
+        "asset": "Acil sosyal hizmet ve başlangıç likiditesi",
+        "revenue_right": "Gelir beklentisi yoktur; yatırımcı ödemesi için kullanılmaz"
+      }
+    ],
+    "revenue_assumptions_mature_year": [
+      {
+        "revenue_source": "Mikro varlıklar",
+        "investment": "20 mn $",
+        "return_pct": 10,
+        "annual_revenue": "2 mn $",
+        "starts": "1. yıldan"
+      },
+      {
+        "revenue_source": "Üretim tesisi + cihaz portföyü",
+        "investment": "50 mn $",
+        "return_pct": 8,
+        "annual_revenue": "4 mn $",
+        "starts": "3. yıldan"
+      },
+      {
+        "revenue_source": "Vakıf sermayesi",
+        "investment": "100 mn $",
+        "return_pct": 5,
+        "annual_revenue": "5 mn $",
+        "starts": "1. yıldan; ana para korunur"
+      },
+      {
+        "revenue_source": "Toplam olgun kapasite",
+        "annual_revenue": "11 mn $ / yıl"
+      }
+    ],
+    "cash_flow_waterfall_mature_year": [
+      {
+        "order": 1,
+        "item": "Bakım, onarım ve işletme (O&M)",
+        "amount": "2.2 mn $",
+        "note": "Sistemin çalışması önce gelir"
+      },
+      {
+        "order": 2,
+        "item": "Rezerv + tekafül aktarımı",
+        "amount": "1.65 mn $",
+        "note": "Likidite ve operasyonel risk tamponu"
+      },
+      {
+        "order": 3,
+        "item": "Karz-ı hasen geri ödemesi",
+        "amount": "2.0 mn $",
+        "note": "Faizsiz borç anaparası, ilk 6 yıl"
+      },
+      {
+        "order": 4,
+        "item": "Sukuk / müşareke yatırımcı ödemesi",
+        "amount": "2.5 mn $",
+        "note": "İlgili havuzun gelirinden"
+      },
+      {
+        "order": 5,
+        "item": "Asgari sosyal hizmetler",
+        "amount": "1.65 mn $",
+        "note": "Kırılgan gruplara su/enerji desteği"
+      },
+      {
+        "order": 6,
+        "item": "Fon yönetimi (Vekâlet)",
+        "amount": "0.33 mn $",
+        "note": "Raporlama, denetim, şer'i kurul"
+      },
+      {
+        "order": 7,
+        "item": "Yeni yatırımlar",
+        "amount": "Kalan",
+        "note": "Büyüme için ayrılır"
+      }
+    ],
+    "qard_hasan_repayment": [
+      {
+        "year": 1,
+        "opening_balance": "10 mn $",
+        "annual_payment": "0",
+        "remaining_balance": "10 mn $"
+      },
+      {
+        "year": 2,
+        "opening_balance": "10 mn $",
+        "annual_payment": "2 mn $",
+        "remaining_balance": "8 mn $"
+      },
+      {
+        "year": 3,
+        "opening_balance": "8 mn $",
+        "annual_payment": "2 mn $",
+        "remaining_balance": "6 mn $"
+      },
+      {
+        "year": 4,
+        "opening_balance": "6 mn $",
+        "annual_payment": "2 mn $",
+        "remaining_balance": "4 mn $"
+      },
+      {
+        "year": 5,
+        "opening_balance": "4 mn $",
+        "annual_payment": "2 mn $",
+        "remaining_balance": "2 mn $"
+      },
+      {
+        "year": 6,
+        "opening_balance": "2 mn $",
+        "annual_payment": "2 mn $",
+        "remaining_balance": "0"
+      }
+    ],
+    "risk_buffers": [
+      {
+        "buffer": "DSRA",
+        "amount": "15 mn $",
+        "function": "Likidite kesintilerinde işletme sürekliliği; stres senaryosunda yıllık 1.5 mn $ açığı yaklaşık 10 yıl karşılayabilir"
+      },
+      {
+        "buffer": "Tekafül havuzu",
+        "amount": "5 mn $",
+        "function": "Yalnızca operasyonel riskler; savaş/abluka kapsam dışı"
+      },
+      {
+        "buffer": "Korunan vakıf sermayesi",
+        "amount": "100 mn $",
+        "function": "Ana güvence; anapara harcanmaz, getirisi sistemi destekler"
+      }
+    ]
+  },
+  "staged_assets_and_timeline": [
+    {
+      "year": "Yıl 1",
+      "scene": "Gazze pilot modüler dağıtım",
+      "active_sources": [
+        "Hibe",
+        "Karz-ı hasen",
+        "Vakıf getirisi"
+      ],
+      "assets": [
+        "Mobil RO",
+        "pompa-depo setleri",
+        "klorlama/dezenfeksiyon",
+        "solar destek kitleri"
+      ],
+      "message": "Acil su ve hijyen hizmeti; büyük tesis beklenmeden erken hizmet üretimi.",
+      "suggested_units": 5,
+      "data_label": "temsili senaryo"
+    },
+    {
+      "year": "Yıl 2",
+      "scene": "Modüler yayılım",
+      "active_sources": [
+        "Hibe",
+        "Karz-ı hasen",
+        "Müşareke mikro varlıklar"
+      ],
+      "assets": [
+        "Konteyner RO",
+        "mobil dağıtım birimleri",
+        "güneş destekli pompa/depo"
+      ],
+      "message": "Kamp, mahalle, okul ve sağlık noktalarına daha geniş erişim.",
+      "suggested_units": 15,
+      "data_label": "temsili senaryo"
+    },
+    {
+      "year": "Yıl 3",
+      "scene": "Türkiye üretim/tedarik tesisi ve Sukuk I",
+      "active_sources": [
+        "Sosyal etkili sukuk",
+        "Vakıf getirisi"
+      ],
+      "assets": [
+        "Türkiye üretim/tedarik tesisi",
+        "cihaz havuzu"
+      ],
+      "message": "İlk sukuk Gazze'de dev merkezi tesis yerine üretim/tedarik kapasitesine bağlanır.",
+      "suggested_units": 25,
+      "data_label": "temsili senaryo"
+    },
+    {
+      "year": "Yıl 5",
+      "scene": "Geniş cihaz havuzu ve daha yaygın Gazze dağıtımı",
+      "active_sources": [
+        "Sukuk",
+        "Müşareke",
+        "Hibe"
+      ],
+      "assets": [
+        "Daha büyük modüler cihaz portföyü",
+        "kurumsal alıcı tedariki",
+        "kiralama/hizmet alımı"
+      ],
+      "message": "Üretim kapasitesiyle daha fazla cihaz; gelir ve etki birlikte büyür.",
+      "suggested_units": 30,
+      "data_label": "temsili senaryo"
+    },
+    {
+      "year": "Yıl 6",
+      "scene": "Karz-ı hasen ödeme baskısı azalır",
+      "active_sources": [
+        "Vakıf getirisi",
+        "Sukuk geliri",
+        "Müşareke geliri"
+      ],
+      "assets": [
+        "Mevcut cihaz portföyü",
+        "rezerv mekanizması"
+      ],
+      "message": "Karz-ı hasen kapanır; serbest nakit ve yeni yatırım kapasitesi güçlenir.",
+      "suggested_units": 38,
+      "data_label": "temsili senaryo"
+    },
+    {
+      "year": "Yıl 10",
+      "scene": "Gazze bakım, montaj ve teknik eğitim merkezi",
+      "active_sources": [
+        "Yeni sukuk",
+        "Vakıf getirisi",
+        "Hibe"
+      ],
+      "assets": [
+        "Bakım merkezi",
+        "montaj merkezi",
+        "teknik eğitim merkezi"
+      ],
+      "message": "Dışa bağımlılık azalır; yerel teknisyen ve bakım kapasitesi oluşur.",
+      "suggested_units": 50,
+      "data_label": "temsili senaryo"
+    },
+    {
+      "year": "Yıl 15",
+      "scene": "Gazze yerel montaj/üretim şubesi",
+      "active_sources": [
+        "Yeni sukuk",
+        "yerel gelir",
+        "çok taraflı fon"
+      ],
+      "assets": [
+        "Yerel montaj hattı",
+        "yedek parça yönetimi",
+        "basit üretim süreçleri"
+      ],
+      "message": "Üretimin bir bölümü yerelleşir; lojistik maliyetler azalır.",
+      "suggested_units": 75,
+      "data_label": "temsili senaryo"
+    },
+    {
+      "year": "Yıl 15+",
+      "scene": "İyimser senaryo: büyük ölçekli WASH altyapısı",
+      "active_sources": [
+        "Yeni sukuklar",
+        "çok taraflı fonlar",
+        "hibeler",
+        "vakıf getirisi"
+      ],
+      "assets": [
+        "Merkezi desalinasyon",
+        "büyük depolama",
+        "ana iletim hattı",
+        "atıksu altyapısı"
+      ],
+      "message": "Saha koşulları elverişli olursa büyük altyapıya geçiş.",
+      "suggested_units": "75+ ve merkezi tesis",
+      "data_label": "iyimser senaryo"
+    }
+  ],
+  "sukuk_roadmap": [
+    {
+      "phase": "Sukuk I",
+      "period": "Yıl 3-5",
+      "target_asset": "Türkiye üretim/tedarik tesisi + modüler cihaz havuzu",
+      "purpose": "Cihaz başına maliyeti düşürmek, gelir üretmek, hızlı dağıtım sağlamak"
+    },
+    {
+      "phase": "Sukuk II",
+      "period": "Yıl 7-10",
+      "target_asset": "Gazze bakım, montaj ve teknik eğitim merkezi",
+      "purpose": "Yerel teknik kapasite ve bakım sürekliliği oluşturmak"
+    },
+    {
+      "phase": "Sukuk III",
+      "period": "Yıl 12-15",
+      "target_asset": "Gazze yerel montaj/üretim şubesi",
+      "purpose": "Lojistik maliyeti düşürmek, yerel istihdam ve üretim kapasitesi kurmak"
+    },
+    {
+      "phase": "Uzun vadeli iyimser faz",
+      "period": "Yıl 15+",
+      "target_asset": "Büyük desalinasyon, depolama, ana iletim ve atıksu altyapısı",
+      "purpose": "Sistemsel altyapı dönüşümü; tek kaynakla değil karma finansmanla"
+    }
+  ],
+  "scenarios": {
+    "base": {
+      "name": "Temel senaryo",
+      "assumptions": [
+        "Üretim/tedarik tesisi 3. yıldan itibaren gelir üretir",
+        "Olgun kapasitede yıllık gelir yaklaşık 11 mn $",
+        "Karz-ı hasen 6 yılda kapanır",
+        "DSRA korunur"
+      ],
+      "mature_revenue": "11 mn $ / yıl",
+      "visual_tone": "mavi/yeşil"
+    },
+    "stress": {
+      "name": "Olumsuz / stres senaryosu",
+      "assumptions": [
+        "3. yıldan itibaren büyük hibe/foncu desteği yaklaşık %50 azalır",
+        "Üretim/tedarik tesisi gecikir",
+        "Gelir 11 mn $ yerine yaklaşık 7.5 mn $ olur",
+        "Yıllık yaklaşık 1.5 mn $ açık oluşur"
+      ],
+      "mitigation": [
+        "DSRA devreye girer",
+        "15 mn $ DSRA yıllık 1.5 mn $ açığı yaklaşık 10 yıl karşılar",
+        "Vakıf getirisi akmaya devam eder",
+        "Yatırım takvimi ertelenir",
+        "Ceza havuzları sosyal hizmet kalemi için tamamlayıcı kaynak olabilir"
+      ],
+      "visual_tone": "turuncu/kırmızı"
+    },
+    "optimistic": {
+      "name": "İyimser senaryo",
+      "assumptions": [
+        "Koşullar kademeli iyileşir",
+        "Sukuk tek seferde değil aşamalı büyür",
+        "6-11. yılda bakım/montaj/üretim kapasitesinin bir kısmı Gazze'ye taşınır",
+        "12-15. yılda büyük ölçekli WASH altyapısına geçiş olabilir"
+      ],
+      "visual_tone": "yeşil/altın"
+    }
+  },
+  "risk_matrix": [
+    {
+      "risk": "Büyük foncu/hibe çekilir",
+      "probability_impact": "Yüksek",
+      "effect": "Gelir düşer, yatırım ertelenir",
+      "mitigation": "DSRA + vakıf getirisi + hibe; ceza havuzları sosyal kaleme yönlendirilebilir"
+    },
+    {
+      "risk": "Üretim tesisi gecikir",
+      "probability_impact": "Yüksek",
+      "effect": "Sukuk geliri gecikir",
+      "mitigation": "Sukuk havuzundaki hızlı gelir üreten modüler cihazlar; takvim uzatma"
+    },
+    {
+      "risk": "Gelir beklenenden düşük",
+      "probability_impact": "Orta",
+      "effect": "Yatırımcı/karz ödemeleri yavaşlar",
+      "mitigation": "Geri ödeme takvimi uzatılır; yeni yatırım ertelenir"
+    },
+    {
+      "risk": "İşletme maliyeti artar",
+      "probability_impact": "Orta",
+      "effect": "Net faaliyet geliri düşer",
+      "mitigation": "O&M önceliklidir; yatırımcı dağıtımı geçici azaltılır"
+    },
+    {
+      "risk": "Savaş/abluka/sistematik kesinti",
+      "probability_impact": "Yüksek",
+      "effect": "Faaliyet durabilir",
+      "mitigation": "Tekafül kapsamı dışı; modüler varlıklar taşınabilir; vakıf anaparası korunur"
+    }
+  ],
+  "guideline_compliance": [
+    {
+      "requirement": "Problem alanı neden öncelikli?",
+      "site_answer": "Kriz dashboard: su erişimi, halk sağlığı, altyapı hasarı, finansman açığı"
+    },
+    {
+      "requirement": "Finansman açığı nedir?",
+      "site_answer": "WASH yeniden inşa ihtiyacı 2.7 milyar USD; mevcut yardım açığı ve donör yorgunluğu"
+    },
+    {
+      "requirement": "Mevcut modeller neden yetersiz?",
+      "site_answer": "Hibe, borç, özel yatırım ve sosyal koruma başarısızlık kartları"
+    },
+    {
+      "requirement": "Model hangi araçlardan oluşur?",
+      "site_answer": "Vakıf, SPV, sukuk, müşareke, hibe/teberru, karz-ı hasen, tekafül, DSRA"
+    },
+    {
+      "requirement": "Taraflar ve ilişki nasıl kuruluyor?",
+      "site_answer": "Vakıf → SPV → ayrı havuzlar → varlıklar → gelir dağıtım şelalesi"
+    },
+    {
+      "requirement": "Kaynak nasıl toplanır, tahsis edilir, izlenir?",
+      "site_answer": "200 mn $ kaynak dağılımı, kullanım dağılımı, ayrı havuz paneli"
+    },
+    {
+      "requirement": "Fıkhî dayanak nedir?",
+      "site_answer": "Anapara garantisi yok; havuzlar karışmaz; gelir hakları kaynağa bağlı"
+    },
+    {
+      "requirement": "Risk kime ait ve nasıl yönetilir?",
+      "site_answer": "Risk matrisi, DSRA, tekafül, vakıf getirisi, takvim esnekliği"
+    },
+    {
+      "requirement": "Sosyal etki nasıl ölçülür?",
+      "site_answer": "Etki dashboard: kişi erişimi, aktif birim, su kapasitesi, istihdam, idari gider, fon verimliliği"
+    },
+    {
+      "requirement": "Sürdürülebilirlik nasıl sağlanır?",
+      "site_answer": "Vakıf getirisi, O&M önceliği, modülerlik, yerelleşme, üretim/tedarik kapasitesi"
+    },
+    {
+      "requirement": "Geleneksel modele göre üstünlük?",
+      "site_answer": "Karşılaştırmalı değerlendirme bölümü: CAPEX/OPEX, risk, gelir, fıkhî uygunluk, toplumsal fayda"
+    }
+  ],
+  "design_system": {
+    "theme": "dark institutional finance",
+    "background": "#07111f / koyu lacivert",
+    "primary": "water blue",
+    "secondary": "green",
+    "finance_accent": "amber/gold",
+    "risk_accent": "orange/red",
+    "tone": "akademik, ciddi, kurumsal; startup eğlencesi gibi değil",
+    "visual_language": [
+      "scrollytelling",
+      "sticky menu",
+      "scene-based year simulator",
+      "interactive map",
+      "cash-flow waterfall",
+      "separate pools diagram",
+      "Sankey/Money-to-Impact Chain"
+    ]
+  },
+  "map_and_interaction_notes": {
+    "gaza_map_note": "Harita noktaları temsili olmalı; gerçek kurulum lokasyonu gibi sunulmamalı.",
+    "logistics_note": "Türkiye-Gazze lojistik hattı temsilîdir; fiili güzergâh saha, izin ve güvenlik koşullarına bağlıdır.",
+    "marker_rules": [
+      {
+        "marker": "small",
+        "meaning": "mobil RO / küçük cihaz"
+      },
+      {
+        "marker": "medium",
+        "meaning": "konteyner RO veya pompa-depo seti"
+      },
+      {
+        "marker": "large",
+        "meaning": "bölgesel cihaz kümesi veya büyük WASH varlığı"
+      }
+    ],
+    "hover_card_fields": [
+      "aktif yıl",
+      "finansman havuzu",
+      "varlık tipi",
+      "kapasite",
+      "tahmini ulaşılan kişi",
+      "durum"
+    ]
+  },
+  "do_not_do": [
+    "Siteye uzun rapor metinlerini aynen koyma.",
+    "Sukuku ana kaynak gibi gösterme.",
+    "Müşareke gelirini sukuk yatırımcısına bağlama.",
+    "Bağış/sosyal hizmet fonunu yatırımcı ödemesi için kullanma.",
+    "Harita noktalarını kesin gerçek lokasyon gibi gösterme.",
+    "Gerçek backend veya canlı veri sistemi gibi sunma."
+  ]
+}
