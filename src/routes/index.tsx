@@ -1,16 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Nav, Hero, Footer } from "@/components/gdaf/chrome";
-import { CrisisSection, WhyFailsSection } from "@/components/gdaf/crisis";
-import {
-  ModelSection,
-  FinancialArchitectureSection,
-  SeparatePoolsSection,
-  MoneyChainSection,
-} from "@/components/gdaf/model";
-import { YearSimulationSection } from "@/components/gdaf/year-simulation";
-import { TurkeyGazaSection } from "@/components/gdaf/turkey-gaza";
-import { ScenariosSection } from "@/components/gdaf/scenarios";
-import { ImpactSection, TechnicalAppendixSection } from "@/components/gdaf/impact";
+import { DashboardNav, Footer } from "@/components/gdaf/chrome";
+import { Dashboard } from "@/components/gdaf/dashboard";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -29,20 +19,9 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Nav />
-      <main>
-        <Hero />
-        <CrisisSection />
-        <WhyFailsSection />
-        <ModelSection />
-        <FinancialArchitectureSection />
-        <SeparatePoolsSection />
-        <MoneyChainSection />
-        <YearSimulationSection />
-        <TurkeyGazaSection />
-        <ScenariosSection />
-        <ImpactSection />
-        <TechnicalAppendixSection />
+      <DashboardNav />
+      <main className="mx-auto max-w-7xl px-4 md:px-6 py-6">
+        <Dashboard />
       </main>
       <Footer />
     </div>

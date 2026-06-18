@@ -5,9 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * GDAF Impact Simulator — Vakıf / Foundation institutional palette.
- * Dark navy base, off-white text, water blue, muted green, restrained
- * amber for finance, terracotta for risk/stress.
+ * GDAF Impact Simulator — Light institutional dashboard palette.
+ * Off-white base, forest green primary, white cards, restrained accents.
  */
 
 @theme inline {
@@ -53,53 +52,52 @@
   --color-chart-4: var(--risk);
   --color-chart-5: var(--water-soft);
 
-  --font-display: "Cormorant Garamond", "Times New Roman", serif;
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
-  --radius: 0.5rem;
+  --radius: 0.75rem;
 
-  /* Institutional navy foundation */
-  --background: oklch(0.18 0.025 250);
-  --surface: oklch(0.22 0.028 250);
-  --surface-2: oklch(0.26 0.03 250);
-  --foreground: oklch(0.96 0.005 80);
-  --ink: oklch(0.92 0.01 80);
-  --rule: oklch(0.35 0.02 250);
+  /* Light dashboard foundation */
+  --background: oklch(0.97 0.008 145);
+  --surface: oklch(1 0 0);
+  --surface-2: oklch(0.96 0.012 145);
+  --foreground: oklch(0.28 0.04 155);
+  --ink: oklch(0.22 0.045 155);
+  --rule: oklch(0.90 0.015 145);
 
-  --card: oklch(0.22 0.028 250);
-  --card-foreground: oklch(0.96 0.005 80);
-  --popover: oklch(0.22 0.028 250);
-  --popover-foreground: oklch(0.96 0.005 80);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.28 0.04 155);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.28 0.04 155);
 
-  --primary: oklch(0.72 0.09 230);          /* water blue */
-  --primary-foreground: oklch(0.16 0.02 250);
-  --secondary: oklch(0.30 0.03 250);
-  --secondary-foreground: oklch(0.96 0.005 80);
-  --muted: oklch(0.28 0.025 250);
-  --muted-foreground: oklch(0.72 0.015 250);
-  --accent: oklch(0.30 0.04 230);
-  --accent-foreground: oklch(0.96 0.005 80);
+  --primary: oklch(0.42 0.11 155);
+  --primary-foreground: oklch(0.99 0.005 145);
+  --secondary: oklch(0.94 0.02 145);
+  --secondary-foreground: oklch(0.35 0.06 155);
+  --muted: oklch(0.94 0.015 145);
+  --muted-foreground: oklch(0.52 0.03 155);
+  --accent: oklch(0.93 0.025 145);
+  --accent-foreground: oklch(0.35 0.06 155);
 
-  --destructive: oklch(0.62 0.14 35);
-  --destructive-foreground: oklch(0.98 0.005 80);
+  --destructive: oklch(0.55 0.18 25);
+  --destructive-foreground: oklch(0.99 0.005 145);
 
-  --border: oklch(0.32 0.022 250);
-  --input: oklch(0.32 0.022 250);
-  --ring: oklch(0.62 0.09 230);
+  --border: oklch(0.90 0.015 145);
+  --input: oklch(0.90 0.015 145);
+  --ring: oklch(0.42 0.11 155);
 
-  --water: oklch(0.72 0.09 230);
-  --water-soft: oklch(0.62 0.07 220);
-  --impact: oklch(0.70 0.09 160);            /* muted green */
-  --finance: oklch(0.78 0.11 80);            /* restrained amber */
-  --risk: oklch(0.66 0.13 40);               /* muted terracotta */
+  --water: oklch(0.42 0.11 155);
+  --water-soft: oklch(0.55 0.09 160);
+  --impact: oklch(0.50 0.12 155);
+  --finance: oklch(0.62 0.14 75);
+  --risk: oklch(0.55 0.18 25);
 }
 
 .dark {
-  /* Reuse dark by default */
-  --background: oklch(0.18 0.025 250);
-  --foreground: oklch(0.96 0.005 80);
+  --background: oklch(0.97 0.008 145);
+  --foreground: oklch(0.28 0.04 155);
 }
 
 @layer base {
@@ -117,8 +115,8 @@
 
   h1, h2, h3, .font-display {
     font-family: var(--font-display);
-    letter-spacing: -0.01em;
-    font-weight: 500;
+    letter-spacing: -0.02em;
+    font-weight: 600;
   }
 }
 
@@ -127,9 +125,10 @@
 }
 
 @utility panel {
-  background: var(--color-surface);
+  background: var(--color-card);
   border: 1px solid var(--color-rule);
   border-radius: var(--radius-lg);
+  box-shadow: 0 1px 3px oklch(0.4 0.04 155 / 0.06);
 }
 
 @utility panel-2 {
@@ -140,8 +139,15 @@
 
 @utility eyebrow {
   text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  font-size: 0.68rem;
   color: var(--color-muted-foreground);
-  font-weight: 500;
+  font-weight: 600;
+}
+
+@utility dash-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 1px 4px oklch(0.4 0.04 155 / 0.07);
 }

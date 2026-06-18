@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
 export const NAV_ITEMS = [
@@ -13,7 +13,88 @@ export const NAV_ITEMS = [
   { id: "ek", label: "Teknik Ek" },
 ];
 
-export function Nav() {
+const DASHBOARD_NAV = [
+  { to: "/" as const, label: "Ana Sayfa", hash: undefined },
+  { to: "/detay" as const, label: "Harita", hash: "lojistik" },
+  { to: "/detay" as const, label: "Senaryolar", hash: "senaryo" },
+  { to: "/detay" as const, label: "Finansman", hash: "mimari" },
+  { to: "/detay" as const, label: "Teknik Ek", hash: "ek" },
+];
+
+function Logo({ compact = false }: { compact?: boolean }) {
+  return (
+    <Link to="/" className="flex items-center gap-3 group">
+      <div className="w-9 h-9 rounded-lg overflow-hidden flex shrink-0 shadow-sm">
+        <div className="w-1/3 bg-[#1a1a1a]" />
+        <div className="w-1/3 bg-[#ce1126]" />
+        <div className="w-1/3 bg-[#007a3d]" />
+      </div>
+      {!compact && (
+        <div className="leading-tight">
+          <div className="font-semibold text-[15px] text-ink tracking-tight">
+            Gazze Etki Simülatörü
+          </div>
+          <div className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground">
+            GDAF Impact Simulator
+          </div>
+        </div>
+      )}
+    </Link>
+  );
+}
+
+export function DashboardNav() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  return (
+    <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-rule shadow-sm">
+      <div className="mx-auto max-w-7xl px-4 md:px-6 h-16 flex items-center justify-between gap-4">
+        <Logo />
+
+        <nav className="hidden md:flex items-center gap-1">
+          {DASHBOARD_NAV.map((n) => {
+            const isActive = n.to === "/" ? pathname === "/" : false;
+            return (
+              <Link
+                key={n.label}
+                to={n.to}
+                hash={n.hash}
+                className={`px-3 py-2 text-[13px] font-medium rounded-lg transition-colors ${
+                  isActive
+                    ? "text-primary bg-primary/10"
+                    : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                }`}
+              >
+                {n.label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="flex items-center gap-2">
+          <Link
+            to="/detay"
+            className="hidden sm:inline-flex px-3 py-2 text-[13px] font-medium text-muted-foreground hover:text-foreground border border-rule rounded-lg transition-colors"
+          >
+            Raporlar
+          </Link>
+          <span className="hidden sm:inline-flex px-2 py-2 text-[12px] font-medium text-muted-foreground border border-rule rounded-lg">
+            TR
+          </span>
+          <Link
+            to="/detay"
+            hash="simulasyon"
+            className="px-4 py-2 text-[13px] font-medium bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+          >
+            Simülasyonu Başlat
+          </Link>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+export function DetailNav() {
   const [active, setActive] = useState<string>("hero");
   const [scrolled, setScrolled] = useState(false);
 
@@ -27,12 +108,14 @@ export function Nav() {
           if (e.isIntersecting) setActive(e.target.id);
         });
       },
-      { rootMargin: "-40% 0px -55% 0px" }
+      { rootMargin: "-40% 0px -55% 0px" },
     );
     NAV_ITEMS.forEach((n) => {
       const el = document.getElementById(n.id);
       if (el) observer.observe(el);
     });
+    const hero = document.getElementById("hero");
+    if (hero) observer.observe(hero);
     return () => {
       window.removeEventListener("scroll", onScroll);
       observer.disconnect();
@@ -43,40 +126,35 @@ export function Nav() {
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "backdrop-blur-md bg-background/85 border-b border-rule"
-          : "bg-transparent"
+          ? "backdrop-blur-md bg-card/95 border-b border-rule shadow-sm"
+          : "bg-card/80 backdrop-blur-sm border-b border-rule/60"
       }`}
     >
-      <div className="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between gap-6">
-        <a href="#hero" className="flex items-center gap-3 group">
-          <div className="w-8 h-8 rounded-sm border border-water/60 flex items-center justify-center">
-            <span className="font-display text-water text-sm leading-none">G</span>
-          </div>
-          <div className="leading-tight">
-            <div className="font-display text-[15px] tracking-wide">GDAF</div>
-            <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
-              Impact Simulator
-            </div>
-          </div>
-        </a>
-        <nav className="hidden lg:flex items-center gap-1">
+      <div className="mx-auto max-w-7xl px-4 md:px-6 h-16 flex items-center justify-between gap-4">
+        <Logo compact />
+
+        <nav className="hidden lg:flex items-center gap-0.5 overflow-x-auto">
           {NAV_ITEMS.map((n) => (
             <a
               key={n.id}
               href={`#${n.id}`}
-              className={`px-3 py-2 text-[12.5px] tracking-wide rounded-sm transition-colors ${
+              className={`px-2.5 py-2 text-[12px] font-medium rounded-lg whitespace-nowrap transition-colors ${
                 active === n.id
-                  ? "text-water"
-                  : "text-muted-foreground hover:text-foreground"
+                  ? "text-primary bg-primary/10"
+                  : "text-muted-foreground hover:text-foreground hover:bg-accent"
               }`}
             >
               {n.label}
             </a>
           ))}
         </nav>
-        <div className="hidden lg:block text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-          Prototip
-        </div>
+
+        <Link
+          to="/"
+          className="shrink-0 px-3 py-2 text-[12px] font-medium text-muted-foreground hover:text-primary border border-rule rounded-lg transition-colors"
+        >
+          ← Dashboard
+        </Link>
       </div>
     </header>
   );
@@ -93,67 +171,67 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative pt-32 pb-24 px-6 overflow-hidden"
+      className="relative pt-28 pb-20 px-6 overflow-hidden"
     >
       <div
-        className="absolute inset-0 -z-10 opacity-[0.18]"
+        className="absolute inset-0 -z-10 opacity-40"
         style={{
           backgroundImage:
-            "radial-gradient(circle at 20% 10%, rgba(120,180,220,0.25), transparent 55%), radial-gradient(circle at 80% 70%, rgba(120,180,220,0.18), transparent 50%)",
+            "radial-gradient(circle at 20% 10%, oklch(0.90 0.04 155 / 0.5), transparent 55%), radial-gradient(circle at 80% 70%, oklch(0.88 0.03 160 / 0.4), transparent 50%)",
         }}
       />
       <div className="mx-auto max-w-7xl">
         <div className="eyebrow mb-6">Jüri sunum prototipi · Statik veri</div>
-        <h1 className="font-display text-5xl md:text-7xl leading-[1.05] max-w-5xl">
+        <h1 className="font-display text-4xl md:text-6xl leading-[1.08] max-w-5xl text-ink">
           Gazze Dirençli<br />
           <span className="text-water">Altyapı Fonu</span>
         </h1>
-        <p className="mt-8 max-w-2xl text-lg text-muted-foreground leading-relaxed">
+        <p className="mt-6 max-w-2xl text-base text-muted-foreground leading-relaxed">
           Katılım finans temelli temiz su, sanitasyon ve güneş destekli WASH
           yeniden yapılanma modeli için interaktif sunum.
         </p>
 
-        <div className="mt-10 flex flex-wrap gap-3">
+        <div className="mt-8 flex flex-wrap gap-3">
           <a
             href="#kriz"
-            className="px-5 py-3 bg-water text-primary-foreground text-sm tracking-wide hover:bg-water/90 transition-colors rounded-sm"
+            className="px-5 py-3 bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors rounded-lg"
           >
             Krizi İncele
           </a>
           <a
             href="#model"
-            className="px-5 py-3 border border-rule text-sm tracking-wide hover:border-water hover:text-water transition-colors rounded-sm"
+            className="px-5 py-3 border border-rule text-sm font-medium hover:border-water hover:text-water transition-colors rounded-lg"
           >
             Modeli Gör
           </a>
           <a
             href="#simulasyon"
-            className="px-5 py-3 border border-rule text-sm tracking-wide hover:border-water hover:text-water transition-colors rounded-sm"
+            className="px-5 py-3 border border-rule text-sm font-medium hover:border-water hover:text-water transition-colors rounded-lg"
           >
             Simülasyonu Başlat
           </a>
         </div>
 
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-5 gap-px bg-rule rounded-sm overflow-hidden">
+        <div className="mt-14 grid grid-cols-2 md:grid-cols-5 gap-3">
           {kpis.map((k) => (
-            <div key={k.label} className="bg-background p-5">
-              <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground mb-3">
+            <div key={k.label} className="dash-card p-5">
+              <div className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground mb-2">
                 {k.label}
               </div>
-              <div className="font-display text-3xl md:text-4xl text-foreground">
+              <div className="text-2xl md:text-3xl font-semibold text-ink">
                 {k.value}
               </div>
               {k.sub && (
                 <div className="text-xs text-muted-foreground mt-1">{k.sub}</div>
               )}
-              <div className="mt-4 text-[10px] text-muted-foreground/70">
+              <div className="mt-3 text-[10px] text-muted-foreground/70">
                 Rapor verisi · {k.source}
               </div>
             </div>
           ))}
         </div>
 
-        <p className="mt-10 text-xs text-muted-foreground max-w-2xl leading-relaxed border-l-2 border-water/50 pl-4">
+        <p className="mt-8 text-xs text-muted-foreground max-w-2xl leading-relaxed border-l-2 border-water/40 pl-4">
           Bu çalışma gerçek bir operasyonel sistem değil; jüri sunumu ve teknik
           ek amacıyla hazırlanmış statik verili interaktif prototiptir. Sayılar
           <span className="text-foreground"> rapor verisi</span> veya
@@ -178,15 +256,15 @@ export function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} className="px-6 py-24 border-t border-rule scroll-mt-20">
+    <section id={id} className="px-6 py-20 border-t border-rule scroll-mt-20">
       <div className="mx-auto max-w-7xl">
-        <div className="mb-12 max-w-3xl">
-          <div className="eyebrow mb-4">{eyebrow}</div>
-          <h2 className="font-display text-3xl md:text-5xl leading-tight">
+        <div className="mb-10 max-w-3xl">
+          <div className="eyebrow mb-3">{eyebrow}</div>
+          <h2 className="font-display text-2xl md:text-4xl leading-tight text-ink">
             {title}
           </h2>
           {intro && (
-            <p className="mt-5 text-muted-foreground leading-relaxed">{intro}</p>
+            <p className="mt-4 text-muted-foreground leading-relaxed">{intro}</p>
           )}
         </div>
         {children}
@@ -205,10 +283,10 @@ export function DataTag({
   const isRapor = kind === "rapor";
   return (
     <span
-      className={`inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.14em] px-1.5 py-0.5 rounded-sm border ${
+      className={`inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.12em] px-2 py-0.5 rounded-md border ${
         isRapor
-          ? "border-water/40 text-water/90"
-          : "border-finance/40 text-finance"
+          ? "border-water/30 text-water bg-water/5"
+          : "border-finance/30 text-finance bg-finance/5"
       }`}
     >
       <span className="w-1 h-1 rounded-full bg-current" />
@@ -220,13 +298,50 @@ export function DataTag({
 
 export function Footer() {
   return (
-    <footer className="px-6 py-12 border-t border-rule">
-      <div className="mx-auto max-w-7xl text-xs text-muted-foreground flex flex-wrap justify-between gap-4">
-        <div>
-          GDAF Impact Simulator · Statik verili interaktif prototip · Jüri sunum amaçlıdır.
+    <footer className="px-6 py-12 border-t border-rule bg-card">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid md:grid-cols-4 gap-8 mb-10">
+          <div className="md:col-span-1">
+            <Logo />
+            <p className="mt-4 text-xs text-muted-foreground leading-relaxed">
+              Katılım finans temelli WASH yeniden yapılanma modeli için interaktif jüri sunum prototipi.
+            </p>
+          </div>
+          <div>
+            <div className="text-xs font-semibold text-ink mb-3">Hızlı Bağlantılar</div>
+            <div className="space-y-2">
+              <Link to="/" className="block text-xs text-muted-foreground hover:text-water">Ana Sayfa</Link>
+              <Link to="/detay" hash="kriz" className="block text-xs text-muted-foreground hover:text-water">Kriz Analizi</Link>
+              <Link to="/detay" hash="model" className="block text-xs text-muted-foreground hover:text-water">GDAF Modeli</Link>
+              <Link to="/detay" hash="senaryo" className="block text-xs text-muted-foreground hover:text-water">Senaryolar</Link>
+            </div>
+          </div>
+          <div>
+            <div className="text-xs font-semibold text-ink mb-3">Kaynaklar</div>
+            <div className="space-y-2">
+              <Link to="/detay" hash="mimari" className="block text-xs text-muted-foreground hover:text-water">Finansal Mimari</Link>
+              <Link to="/detay" hash="simulasyon" className="block text-xs text-muted-foreground hover:text-water">Yıl Simülasyonu</Link>
+              <Link to="/detay" hash="ek" className="block text-xs text-muted-foreground hover:text-water">Teknik Ek</Link>
+            </div>
+          </div>
+          <div className="dash-card p-4">
+            <div className="text-xs font-semibold text-ink mb-2">İletişim</div>
+            <p className="text-[11px] text-muted-foreground mb-3">Jüri sunumu ve teknik ek için hazırlanmıştır.</p>
+            <Link
+              to="/detay"
+              className="inline-block px-4 py-2 text-xs font-medium bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+            >
+              Ayrıntıları Gör
+            </Link>
+          </div>
         </div>
-        <div className="text-muted-foreground/60">
-          Yapay zekâ tasarım ve metin düzenleme aracı olarak kullanılmıştır.
+        <div className="text-xs text-muted-foreground flex flex-wrap justify-between gap-4 pt-6 border-t border-rule">
+          <div>
+            GDAF Impact Simulator · Statik verili interaktif prototip · Jüri sunum amaçlıdır.
+          </div>
+          <div className="text-muted-foreground/60">
+            Yapay zekâ tasarım ve metin düzenleme aracı olarak kullanılmıştır.
+          </div>
         </div>
       </div>
     </footer>
