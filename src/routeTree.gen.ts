@@ -9,12 +9,54 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TeknikEkRouteImport } from './routes/teknik-ek'
+import { Route as SenaryolarRouteImport } from './routes/senaryolar'
+import { Route as ModelRouteImport } from './routes/model'
+import { Route as KrizRouteImport } from './routes/kriz'
+import { Route as FinansmanRouteImport } from './routes/finansman'
+import { Route as EtkiRouteImport } from './routes/etki'
 import { Route as DetayRouteImport } from './routes/detay'
+import { Route as DegerlendirmeRouteImport } from './routes/degerlendirme'
 import { Route as IndexRouteImport } from './routes/index'
 
+const TeknikEkRoute = TeknikEkRouteImport.update({
+  id: '/teknik-ek',
+  path: '/teknik-ek',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SenaryolarRoute = SenaryolarRouteImport.update({
+  id: '/senaryolar',
+  path: '/senaryolar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ModelRoute = ModelRouteImport.update({
+  id: '/model',
+  path: '/model',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const KrizRoute = KrizRouteImport.update({
+  id: '/kriz',
+  path: '/kriz',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FinansmanRoute = FinansmanRouteImport.update({
+  id: '/finansman',
+  path: '/finansman',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EtkiRoute = EtkiRouteImport.update({
+  id: '/etki',
+  path: '/etki',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DetayRoute = DetayRouteImport.update({
   id: '/detay',
   path: '/detay',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DegerlendirmeRoute = DegerlendirmeRouteImport.update({
+  id: '/degerlendirme',
+  path: '/degerlendirme',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -25,37 +67,142 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/degerlendirme': typeof DegerlendirmeRoute
   '/detay': typeof DetayRoute
+  '/etki': typeof EtkiRoute
+  '/finansman': typeof FinansmanRoute
+  '/kriz': typeof KrizRoute
+  '/model': typeof ModelRoute
+  '/senaryolar': typeof SenaryolarRoute
+  '/teknik-ek': typeof TeknikEkRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/degerlendirme': typeof DegerlendirmeRoute
   '/detay': typeof DetayRoute
+  '/etki': typeof EtkiRoute
+  '/finansman': typeof FinansmanRoute
+  '/kriz': typeof KrizRoute
+  '/model': typeof ModelRoute
+  '/senaryolar': typeof SenaryolarRoute
+  '/teknik-ek': typeof TeknikEkRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/degerlendirme': typeof DegerlendirmeRoute
   '/detay': typeof DetayRoute
+  '/etki': typeof EtkiRoute
+  '/finansman': typeof FinansmanRoute
+  '/kriz': typeof KrizRoute
+  '/model': typeof ModelRoute
+  '/senaryolar': typeof SenaryolarRoute
+  '/teknik-ek': typeof TeknikEkRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/detay'
+  fullPaths:
+    | '/'
+    | '/degerlendirme'
+    | '/detay'
+    | '/etki'
+    | '/finansman'
+    | '/kriz'
+    | '/model'
+    | '/senaryolar'
+    | '/teknik-ek'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/detay'
-  id: '__root__' | '/' | '/detay'
+  to:
+    | '/'
+    | '/degerlendirme'
+    | '/detay'
+    | '/etki'
+    | '/finansman'
+    | '/kriz'
+    | '/model'
+    | '/senaryolar'
+    | '/teknik-ek'
+  id:
+    | '__root__'
+    | '/'
+    | '/degerlendirme'
+    | '/detay'
+    | '/etki'
+    | '/finansman'
+    | '/kriz'
+    | '/model'
+    | '/senaryolar'
+    | '/teknik-ek'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DegerlendirmeRoute: typeof DegerlendirmeRoute
   DetayRoute: typeof DetayRoute
+  EtkiRoute: typeof EtkiRoute
+  FinansmanRoute: typeof FinansmanRoute
+  KrizRoute: typeof KrizRoute
+  ModelRoute: typeof ModelRoute
+  SenaryolarRoute: typeof SenaryolarRoute
+  TeknikEkRoute: typeof TeknikEkRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/teknik-ek': {
+      id: '/teknik-ek'
+      path: '/teknik-ek'
+      fullPath: '/teknik-ek'
+      preLoaderRoute: typeof TeknikEkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/senaryolar': {
+      id: '/senaryolar'
+      path: '/senaryolar'
+      fullPath: '/senaryolar'
+      preLoaderRoute: typeof SenaryolarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/model': {
+      id: '/model'
+      path: '/model'
+      fullPath: '/model'
+      preLoaderRoute: typeof ModelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/kriz': {
+      id: '/kriz'
+      path: '/kriz'
+      fullPath: '/kriz'
+      preLoaderRoute: typeof KrizRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/finansman': {
+      id: '/finansman'
+      path: '/finansman'
+      fullPath: '/finansman'
+      preLoaderRoute: typeof FinansmanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/etki': {
+      id: '/etki'
+      path: '/etki'
+      fullPath: '/etki'
+      preLoaderRoute: typeof EtkiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/detay': {
       id: '/detay'
       path: '/detay'
       fullPath: '/detay'
       preLoaderRoute: typeof DetayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/degerlendirme': {
+      id: '/degerlendirme'
+      path: '/degerlendirme'
+      fullPath: '/degerlendirme'
+      preLoaderRoute: typeof DegerlendirmeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -70,7 +217,14 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DegerlendirmeRoute: DegerlendirmeRoute,
   DetayRoute: DetayRoute,
+  EtkiRoute: EtkiRoute,
+  FinansmanRoute: FinansmanRoute,
+  KrizRoute: KrizRoute,
+  ModelRoute: ModelRoute,
+  SenaryolarRoute: SenaryolarRoute,
+  TeknikEkRoute: TeknikEkRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

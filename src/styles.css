@@ -90,8 +90,11 @@
 
   --water: oklch(0.42 0.11 155);
   --water-soft: oklch(0.55 0.09 160);
+  --water-pill: #E1F5EE;
   --impact: oklch(0.50 0.12 155);
   --finance: oklch(0.62 0.14 75);
+  --finance-pill: #FAEEDA;
+  --finance-ink: #854F0B;
   --risk: oklch(0.55 0.18 25);
 }
 
@@ -150,4 +153,113 @@
   border: 1px solid var(--color-rule);
   border-radius: var(--radius-lg);
   box-shadow: 0 1px 4px oklch(0.4 0.04 155 / 0.07);
+}
+
+/* Ana sayfa — animasyonlu su göstergesi */
+@keyframes home-wave-back {
+  from { transform: translateX(0); }
+  to { transform: translateX(112px); }
+}
+
+@keyframes home-wave-front {
+  from { transform: translateX(0); }
+  to { transform: translateX(-112px); }
+}
+
+.home-wave-layer-back {
+  animation: home-wave-back 5s linear infinite;
+}
+
+.home-wave-layer-front {
+  animation: home-wave-front 3.4s linear infinite;
+}
+
+/* Yatay su ölçeği dalgaları */
+@keyframes home-wave-h-back {
+  from { transform: translateX(0); }
+  to { transform: translateX(100px); }
+}
+
+@keyframes home-wave-h-front {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100px); }
+}
+
+.home-wave-h-back {
+  animation: home-wave-h-back 5s linear infinite;
+}
+
+.home-wave-h-front {
+  animation: home-wave-h-front 3.4s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-wave-layer-back,
+  .home-wave-layer-front,
+  .home-wave-h-back,
+  .home-wave-h-front {
+    animation: none;
+  }
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Ana sayfa — görsel referans stilleri */
+.home-data-tag-rapor {
+  background: var(--water-pill);
+  color: var(--water);
+  border-color: oklch(0.42 0.11 155 / 0.2);
+}
+
+.home-data-tag-senaryo {
+  background: var(--finance-pill);
+  color: var(--finance-ink);
+  border-color: oklch(0.62 0.14 75 / 0.25);
+}
+
+.home-pill-badge {
+  background: var(--water-pill);
+  color: var(--water);
+}
+
+.home-chain-node {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 9999px;
+  border: 1.5px solid oklch(0.42 0.11 155 / 0.25);
+  background: oklch(0.97 0.02 145);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .home-chain-node {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+.home-marker-line {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 2px;
+  border-radius: 1px;
+}
+
+.home-marker-dot {
+  position: absolute;
+  top: -7px;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  transform: translateX(-50%);
+  border: 2px solid var(--color-card);
 }

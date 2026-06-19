@@ -250,7 +250,7 @@ const KIND_LABEL: Record<AssetKind, string> = {
   assembly: "Yerel montaj hattı",
 };
 
-export function YearSimulationSection() {
+export function YearSimulationSection({ embedded = false }: { embedded?: boolean }) {
   const [year, setYear] = useState(YEARS[0]);
   const [hover, setHover] = useState<Marker | null>(null);
 
@@ -306,13 +306,8 @@ export function YearSimulationSection() {
     year.idx <= 2 ? "Acil" : year.idx <= 5 ? "Yükseliyor" : year.idx <= 10 ? "Yerleşik" : "Genişliyor";
   const activeSource = stage?.active_sources?.join(" · ") || "—";
 
-  return (
-    <Section
-      id="simulasyon"
-      eyebrow="07 · Yıl Bazlı Simülasyon"
-      title="Gazze'de aşamalı, disiplinli yayılım."
-      intro="Zaman çizelgesi bir slider değil, sahnedir. Her yıl seçimi aktif varlıkları, finansman kaynağını ve etkiyi yeniden hesaplar."
-    >
+  const inner = (
+    <>
       {/* Timeline */}
       <div className="panel-2 p-3 mb-6 flex flex-wrap gap-1">
         {YEARS.map((y) => {
@@ -568,6 +563,19 @@ export function YearSimulationSection() {
           </div>
         </aside>
       </div>
+    </>
+  );
+
+  if (embedded) return <div id="simulasyon">{inner}</div>;
+
+  return (
+    <Section
+      id="simulasyon"
+      eyebrow="07 · Yıl Bazlı Simülasyon"
+      title="Gazze'de aşamalı, disiplinli yayılım."
+      intro="Zaman çizelgesi bir slider değil, sahnedir. Her yıl seçimi aktif varlıkları, finansman kaynağını ve etkiyi yeniden hesaplar."
+    >
+      {inner}
     </Section>
   );
 }

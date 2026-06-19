@@ -1,484 +1,392 @@
-import { Link } from "@tanstack/react-router";
-import data from "@/data/gdaf";
+import { useState } from "react";
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  ResponsiveContainer,
-  Tooltip,
-  Cell,
-} from "recharts";
-import {
+  Droplet,
   Droplets,
-  TrendingUp,
-  Shield,
+  Activity,
+  ShieldCheck,
+  Building2,
+  HeartPulse,
   Users,
-  DollarSign,
-  Home,
-  ChevronDown,
-  MapPin,
-  Zap,
-  Factory,
-  Hospital,
+  UserMinus,
+  Construction,
+  Coins,
+  Sun,
+  TrendingUp,
+  ArrowRight,
+  UsersRound,
 } from "lucide-react";
+import {
+  HOME_HERO,
+  HOME_WATER,
+  HOME_CRISIS_STRIP,
+  HOME_FUND,
+  HOME_MODEL_CHAIN,
+  HOME_IMPACT,
+} from "@/data/homeData";
 
-const KPI_CARDS = [
-  {
-    label: "Etkilenen nüfus",
-    value: "2,13M",
-    icon: Users,
-    tone: "text-water",
-    bg: "bg-water/10",
-    source: "PCBS",
-  },
-  {
-    label: "Yerinden edilmiş",
-    value: "1,9M",
-    icon: Home,
-    tone: "text-risk",
-    bg: "bg-risk/10",
-    source: "OCHA",
-  },
-  {
-    label: "Mevcut su erişimi",
-    value: "6,1 L",
-    sub: "kişi/gün",
-    icon: Droplets,
-    tone: "text-water",
-    bg: "bg-water/10",
-    source: "WASH R3",
-  },
-  {
-    label: "WHO acil standardı",
-    value: "15 L",
-    sub: "kişi/gün",
-    icon: Shield,
-    tone: "text-impact",
-    bg: "bg-impact/10",
-    source: "WHO",
-  },
-  {
-    label: "Ulaşılan kişi (olgun)",
-    value: "250K+",
-    icon: Users,
-    tone: "text-impact",
-    bg: "bg-impact/10",
-    source: "temsili senaryo",
-  },
-  {
-    label: "Yeniden inşa ihtiyacı",
-    value: "2,7 Mrd $",
-    icon: DollarSign,
-    tone: "text-finance",
-    bg: "bg-finance/10",
-    source: "BM/OCHA",
-  },
-];
+const BADGE_ICONS = { droplet: Droplet, activity: Activity, "shield-check": ShieldCheck } as const;
 
-const SCENARIOS = [
-  {
-    key: "base",
-    label: "Temel Senaryo",
-    tone: "border-impact bg-impact/5",
-    dot: "bg-impact",
-    summary: "Olgun yıl geliri yaklaşık 11 mn $",
-    positive: true,
-  },
-  {
-    key: "stress",
-    label: "Stres Senaryosu",
-    tone: "border-risk bg-risk/5",
-    dot: "bg-risk",
-    summary: "Gelir 7,5 mn $'a düşer · yıllık 1,5 mn $ açık",
-    positive: false,
-  },
-  {
-    key: "optimistic",
-    label: "İyimser Senaryo",
-    tone: "border-water bg-water/5",
-    dot: "bg-water",
-    summary: "Ek sukuk, yerel üretim, sistemsel altyapı",
-    positive: true,
-  },
-] as const;
+const CRISIS_ICONS = {
+  users: Users,
+  "user-minus": UserMinus,
+  droplet: Droplets,
+  construction: Construction,
+} as const;
 
-const IMPACT_SUMMARY = [
-  { label: "Temiz su kapasitesi", value: "1.500 m³+", positive: true },
-  { label: "Aktif WASH birimi", value: "60+", positive: true },
-  { label: "Yerel istihdam", value: "100+", positive: true },
-  { label: "DSRA dayanımı", value: "≈10 yıl", positive: true },
-];
+const CHAIN_ICONS = {
+  users: Users,
+  coins: Coins,
+  sun: Sun,
+  droplets: Droplets,
+  "trending-up": TrendingUp,
+} as const;
 
-const FINANCE_POOLS = data.financial_architecture.separate_pools.map(
-  (p: { pool: string; amount: string }) => ({
-    name: p.pool.replace(" havuzu", "").replace(" sosyal katmanı", ""),
-    amount: p.amount,
-  }),
-);
+const IMPACT_ICONS = {
+  users: Users,
+  building: Building2,
+  "heart-pulse": HeartPulse,
+  "users-round": UsersRound,
+} as const;
 
-const IMPACT_MATRIX = [
-  { metric: "Su erişimi", current: 6, target: 15 },
-  { metric: "Sanitasyon", current: 26, target: 75 },
-  { metric: "WASH birimi", current: 5, target: 60 },
-  { metric: "İstihdam", current: 10, target: 100 },
-  { metric: "Sosyal hizmet", current: 20, target: 85 },
-];
+const H_WAVE =
+  "M-200,24 q50,-6 100,0 t100,0 t100,0 t100,0 t100,0 V48 H-200 Z";
 
-const MAP_LEGEND = [
-  { label: "Pompa istasyonu", color: "bg-water", icon: Zap },
-  { label: "Su deposu", color: "bg-water-soft", icon: Droplets },
-  { label: "Sağlık merkezi", color: "bg-impact", icon: Hospital },
-  { label: "Üretim tesisi", color: "bg-finance", icon: Factory },
-];
+function pctOnScale(value: number, max: number) {
+  return Math.min(100, Math.max(0, (value / max) * 100));
+}
 
-function GazaMap() {
-  const zones = data.governorate_data.filter(
-    (z: { area: string }) => z.area !== "Tüm Gaza",
-  );
-  const latMin = 31.22;
-  const latMax = 31.59;
-  const lonMin = 34.22;
-  const lonMax = 34.55;
-
-  const toPos = (lat: number, lon: number) => ({
-    left: `${((lon - lonMin) / (lonMax - lonMin)) * 82 + 9}%`,
-    top: `${((latMax - lat) / (latMax - latMin)) * 78 + 11}%`,
-  });
-
+function HomeDataTag({ kind, source }: { kind: "rapor" | "senaryo"; source?: string }) {
+  const isRapor = kind === "rapor";
   return (
-    <div className="relative w-full h-full min-h-[280px] rounded-lg overflow-hidden bg-[oklch(0.94_0.02_155)]">
-      <svg
-        viewBox="0 0 400 520"
-        className="absolute inset-0 w-full h-full"
-        preserveAspectRatio="xMidYMid meet"
-      >
-        <path
-          d="M 60 80 L 340 60 L 360 200 L 350 380 L 320 460 L 80 480 L 50 300 Z"
-          fill="oklch(0.88 0.03 145)"
-          stroke="oklch(0.75 0.05 155)"
-          strokeWidth="1.5"
-        />
-        <path
-          d="M 80 120 L 300 100 L 310 250 L 290 400 L 100 420 L 70 250 Z"
-          fill="oklch(0.82 0.04 155)"
-          stroke="oklch(0.70 0.06 155)"
-          strokeWidth="1"
-          opacity="0.6"
-        />
-      </svg>
+    <span
+      className={`inline-flex items-center gap-1.5 text-[9px] uppercase tracking-[0.1em] px-2 py-0.5 rounded-full border shrink-0 ${
+        isRapor ? "home-data-tag-rapor" : "home-data-tag-senaryo"
+      }`}
+    >
+      <span className="w-1.5 h-1.5 rounded-full bg-current" />
+      {isRapor ? "Rapor verisi" : "Temsili senaryo"}
+      {source && <span className="normal-case tracking-normal opacity-80">· {source}</span>}
+    </span>
+  );
+}
 
-      {zones.map((z: { area: string; lat: number; lon: number; under_6L_pct: number }) => {
-        const pos = toPos(z.lat, z.lon);
-        const severity = z.under_6L_pct > 50 ? "bg-risk" : "bg-finance";
-        return (
-          <div
-            key={z.area}
-            className="absolute -translate-x-1/2 -translate-y-1/2 group"
-            style={{ left: pos.left, top: pos.top }}
-          >
-            <div className={`w-3 h-3 rounded-full ${severity} ring-2 ring-white shadow-sm`} />
-            <div className="absolute left-4 top-1/2 -translate-y-1/2 hidden group-hover:block z-10 whitespace-nowrap bg-ink text-white text-[10px] px-2 py-1 rounded-md shadow-lg">
-              {z.area} · {z.under_6L_pct}% &lt;6L
-            </div>
-          </div>
-        );
-      })}
-
-      <div className="absolute bottom-3 left-3 right-3 flex flex-wrap gap-2">
-        {["Gazze City", "Khan Younis", "Deir Al-Balah", "Middle Area"].map((a) => (
-          <span
-            key={a}
-            className="text-[9px] px-2 py-0.5 rounded-full bg-white/80 text-muted-foreground border border-rule"
-          >
-            {a}
-          </span>
-        ))}
+function HeroCard() {
+  return (
+    <div className="dash-card p-4 md:p-5 lg:p-6 h-full flex flex-col items-center justify-center text-center min-h-0">
+      <h1 className="font-display text-lg md:text-xl lg:text-2xl leading-tight text-water max-w-lg">
+        {HOME_HERO.title}
+      </h1>
+      <p className="mt-3 text-xs md:text-sm text-muted-foreground leading-relaxed max-w-lg line-clamp-3">
+        {HOME_HERO.subtitle}
+      </p>
+      <div className="mt-4 flex flex-wrap justify-center gap-2">
+        {HOME_HERO.badges.map((badge) => {
+          const Icon = BADGE_ICONS[badge.icon];
+          return (
+            <span
+              key={badge.id}
+              className="home-pill-badge inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs md:text-sm font-medium"
+            >
+              <Icon className="w-4 h-4" strokeWidth={2} />
+              {badge.label}
+            </span>
+          );
+        })}
       </div>
     </div>
   );
 }
 
-function FinanceRing({ pct, color }: { pct: number; color: string }) {
-  const r = 28;
-  const circ = 2 * Math.PI * r;
-  const offset = circ - (pct / 100) * circ;
-  return (
-    <svg width="72" height="72" className="shrink-0">
-      <circle cx="36" cy="36" r={r} fill="none" stroke="var(--color-rule)" strokeWidth="6" />
-      <circle
-        cx="36"
-        cy="36"
-        r={r}
-        fill="none"
-        stroke={color}
-        strokeWidth="6"
-        strokeDasharray={circ}
-        strokeDashoffset={offset}
-        strokeLinecap="round"
-        transform="rotate(-90 36 36)"
-      />
-      <text x="36" y="40" textAnchor="middle" className="fill-foreground text-[11px] font-semibold">
-        {pct}%
-      </text>
-    </svg>
-  );
-}
-
-export function Dashboard() {
-  const poolPcts = [50, 25, 10, 15];
-  const poolColors = [
-    "var(--color-impact)",
-    "var(--color-water)",
-    "var(--color-water-soft)",
-    "var(--color-finance)",
-  ];
+function WaterCrisisCard() {
+  const { currentL, whoEmergencyL, prewarL, scaleMaxL } = HOME_WATER;
+  const fillWidth = pctOnScale(currentL, scaleMaxL);
+  const whoPos = pctOnScale(whoEmergencyL, scaleMaxL);
+  const prewarPos = pctOnScale(prewarL, scaleMaxL);
+  const currentPos = pctOnScale(currentL, scaleMaxL);
 
   return (
-    <div className="space-y-6">
-      {/* Intro banner */}
-      <div className="dash-card p-6 md:p-8">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-          <div className="max-w-2xl">
-            <div className="eyebrow mb-3 text-water">GDAF Impact Simulator</div>
-            <h1 className="text-2xl md:text-3xl font-semibold text-ink leading-tight">
-              Gazze İçin Dirençli Etki ve Altyapı Modeli
-            </h1>
-            <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-              Katılım finans temelli temiz su, sanitasyon ve güneş destekli WASH
-              yeniden yapılanma modeli için interaktif sunum.
-            </p>
-            <div className="mt-5 flex flex-wrap gap-4">
-              {[
-                { icon: Droplets, label: "WASH Odaklı" },
-                { icon: TrendingUp, label: "Veriye Dayalı" },
-                { icon: Shield, label: "Dirençli Gelecek" },
-              ].map(({ icon: Icon, label }) => (
-                <div key={label} className="flex items-center gap-2 text-xs text-muted-foreground">
-                  <div className="w-7 h-7 rounded-lg bg-water/10 flex items-center justify-center">
-                    <Icon className="w-3.5 h-3.5 text-water" />
-                  </div>
-                  {label}
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-2 shrink-0">
-            <Link
-              to="/detay"
-              hash="simulasyon"
-              className="px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium rounded-lg hover:bg-primary/90 transition-colors"
-            >
-              Simülasyonu Başlat
-            </Link>
-            <Link
-              to="/detay"
-              className="px-5 py-2.5 border border-rule text-sm font-medium rounded-lg hover:border-water hover:text-water transition-colors"
-            >
-              Raporlar
-            </Link>
-          </div>
-        </div>
+    <div className="dash-card p-4 h-full flex flex-col min-h-0">
+      <div className="flex items-start justify-between gap-2 shrink-0">
+        <span className="text-[10px] font-bold uppercase tracking-widest text-risk">{HOME_WATER.label}</span>
+        <HomeDataTag kind="rapor" source={HOME_WATER.source} />
       </div>
 
-      {/* KPI row */}
-      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3">
-        {KPI_CARDS.map((k) => (
-          <div key={k.label} className="dash-card p-4">
-            <div className="flex items-start justify-between gap-2">
-              <div className={`w-8 h-8 rounded-lg ${k.bg} flex items-center justify-center shrink-0`}>
-                <k.icon className={`w-4 h-4 ${k.tone}`} />
-              </div>
+      <p className="mt-2 text-[11px] text-foreground leading-snug shrink-0">
+        {HOME_WATER.headline}{" "}
+        <span className="text-risk font-bold">{HOME_WATER.headlineHighlight}</span>
+      </p>
+
+      <div className="grid grid-cols-3 gap-2 mt-3 shrink-0">
+        {HOME_WATER.markers.map((m) => (
+          <div key={m.key} className="text-center">
+            <div className="text-[8px] uppercase tracking-wide text-muted-foreground leading-tight">{m.label}</div>
+            <div className={`font-display text-base md:text-lg leading-none mt-1 ${m.tone === "risk" ? "text-risk" : "text-ink"}`}>
+              {m.value}
             </div>
-            <div className="mt-3 text-[10px] uppercase tracking-wide text-muted-foreground leading-tight">
-              {k.label}
-            </div>
-            <div className={`text-xl font-semibold mt-1 ${k.tone}`}>{k.value}</div>
-            {k.sub && <div className="text-[10px] text-muted-foreground">{k.sub}</div>}
-            <div className="mt-2 text-[9px] text-muted-foreground/70">{k.source}</div>
+            <div className="text-[8px] text-muted-foreground mt-0.5">{m.unit}</div>
           </div>
         ))}
       </div>
 
-      {/* Map + Scenarios */}
-      <div className="grid lg:grid-cols-3 gap-4">
-        <div className="lg:col-span-2 dash-card p-5">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <div className="eyebrow mb-1">Altyapı Haritası</div>
-              <h2 className="text-base font-semibold text-ink flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-water" />
-                Gazze Altyapı Haritası
-              </h2>
-            </div>
-            <Link to="/detay" hash="lojistik" className="text-xs text-water hover:underline">
-              Detay →
-            </Link>
+      <div className="relative mt-4 mb-1 flex-1 flex flex-col justify-end min-h-[64px]">
+        <div className="relative h-11 md:h-12 rounded-md bg-[#E1F5EE]/50 border border-rule overflow-visible">
+          <div
+            className="absolute inset-y-0 left-0 overflow-hidden rounded-l-md"
+            style={{ width: `${fillWidth}%` }}
+          >
+            <svg
+              className="absolute inset-0 w-[200%] h-full min-w-full"
+              viewBox="0 0 400 48"
+              preserveAspectRatio="none"
+              aria-hidden
+            >
+              <g className="home-wave-h-back">
+                <path d={H_WAVE} fill="#5DCAA5" fillOpacity={0.7} />
+              </g>
+              <g className="home-wave-h-front">
+                <path d={H_WAVE} fill="#1D9E75" fillOpacity={0.9} />
+              </g>
+            </svg>
           </div>
-          <div className="grid md:grid-cols-[140px_1fr] gap-4">
-            <div className="space-y-2">
-              <div className="eyebrow">Lejant</div>
-              {MAP_LEGEND.map((l) => (
-                <div key={l.label} className="flex items-center gap-2 text-[11px] text-muted-foreground">
-                  <div className={`w-2.5 h-2.5 rounded-full ${l.color}`} />
-                  {l.label}
-                </div>
-              ))}
-              <div className="pt-2 space-y-1">
-                <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
-                  <div className="w-2.5 h-2.5 rounded-full bg-risk" /> Yüksek risk bölgesi
-                </div>
-                <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
-                  <div className="w-2.5 h-2.5 rounded-full bg-finance" /> Orta risk bölgesi
-                </div>
-              </div>
-            </div>
-            <GazaMap />
-          </div>
+
+          {/* Su doluluk bitimi — 6,1 */}
+          <div className="home-marker-line bg-water" style={{ left: `${currentPos}%` }} />
+          <div className="home-marker-dot bg-water" style={{ left: `${currentPos}%` }} />
+          {/* WHO acil eşiği — 15 */}
+          <div className="home-marker-line bg-risk" style={{ left: `${whoPos}%` }} />
+          <div className="home-marker-dot bg-risk" style={{ left: `${whoPos}%` }} />
+          {/* Savaş öncesi — 82,7 */}
+          <div className="home-marker-line bg-[#888780]" style={{ left: `${prewarPos}%` }} />
+          <div className="home-marker-dot bg-[#888780]" style={{ left: `${prewarPos}%` }} />
         </div>
-
-        <div className="space-y-4">
-          <div className="dash-card p-5">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <div className="eyebrow mb-1">Senaryolar</div>
-                <h2 className="text-base font-semibold text-ink">Senaryo Karşılaştırması</h2>
-              </div>
-              <Link to="/detay" hash="senaryo" className="text-xs text-water hover:underline">
-                Detay →
-              </Link>
-            </div>
-            <div className="space-y-2">
-              {SCENARIOS.map((s) => (
-                <div
-                  key={s.key}
-                  className={`rounded-lg border p-3 ${s.tone}`}
-                >
-                  <div className="flex items-center gap-2 mb-1">
-                    <div className={`w-2 h-2 rounded-full ${s.dot}`} />
-                    <span className="text-xs font-semibold text-ink">{s.label}</span>
-                  </div>
-                  <p className="text-[11px] text-muted-foreground leading-snug pl-4">
-                    {s.summary}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="dash-card p-5">
-            <div className="eyebrow mb-3">Etki Özeti</div>
-            <div className="grid grid-cols-2 gap-2">
-              {IMPACT_SUMMARY.map((item) => (
-                <div key={item.label} className="rounded-lg bg-surface-2 p-3">
-                  <div className="text-lg font-semibold text-impact">{item.value}</div>
-                  <div className="text-[10px] text-muted-foreground mt-0.5 leading-tight">
-                    {item.label}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+        <div className="relative mt-2 h-4 text-[9px] text-muted-foreground">
+          <span className="absolute left-0 top-0">0</span>
+          <span className="absolute top-0 font-semibold text-water" style={{ left: `${currentPos}%`, transform: "translateX(-50%)" }}>
+            6,1
+          </span>
+          <span className="absolute top-0 font-semibold text-risk" style={{ left: `${whoPos}%`, transform: "translateX(-50%)" }}>
+            15
+          </span>
+          <span className="absolute right-0 top-0">100 L/kişi/gün</span>
         </div>
       </div>
+    </div>
+  );
+}
 
-      {/* Finance + Impact matrix */}
-      <div className="grid lg:grid-cols-2 gap-4">
-        <div className="dash-card p-5">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <div className="eyebrow mb-1">Finansman</div>
-              <h2 className="text-base font-semibold text-ink">Finansman Modelleri ve Etki</h2>
-            </div>
-            <Link to="/detay" hash="mimari" className="text-xs text-water hover:underline">
-              Detay →
-            </Link>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            {FINANCE_POOLS.slice(0, 4).map((pool, i) => (
-              <div key={pool.name} className="rounded-lg border border-rule p-3 flex items-center gap-3">
-                <FinanceRing pct={poolPcts[i] ?? 20} color={poolColors[i] ?? "var(--color-water)"} />
-                <div>
-                  <div className="text-xs font-semibold text-ink leading-tight">{pool.name}</div>
-                  <div className="text-sm font-semibold text-water mt-0.5">{pool.amount}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+function FundPanel() {
+  const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
+  const r = 42;
+  const cx = 54;
+  const cy = 54;
+  const c = 2 * Math.PI * r;
+  let offset = 0;
 
-        <div className="dash-card p-5">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <div className="eyebrow mb-1">Etki Analizi</div>
-              <h2 className="text-base font-semibold text-ink">Etki Matrisi</h2>
-            </div>
-            <Link to="/detay" hash="etki" className="text-xs text-water hover:underline">
-              Detay →
-            </Link>
-          </div>
-          <div className="h-[200px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={IMPACT_MATRIX} barGap={2} barCategoryGap="20%">
-                <XAxis
-                  dataKey="metric"
-                  tick={{ fontSize: 10, fill: "var(--color-muted-foreground)" }}
-                  axisLine={false}
-                  tickLine={false}
-                />
-                <YAxis hide />
-                <Tooltip
-                  contentStyle={{
-                    background: "var(--color-card)",
-                    border: "1px solid var(--color-rule)",
-                    borderRadius: "8px",
-                    fontSize: "11px",
+  const selected = selectedIdx !== null ? HOME_FUND.layers[selectedIdx] : null;
+  const [amountValue, amountUnit] = selected ? selected.amount.split(" ") : [HOME_FUND.total, HOME_FUND.unit];
+
+  return (
+    <div className="dash-card p-3 md:p-4 h-full flex flex-col min-h-0">
+      <div className="flex items-start justify-between gap-2 shrink-0 mb-2">
+        <h2 className="font-display text-xs md:text-sm text-ink leading-tight">{HOME_FUND.title}</h2>
+        <HomeDataTag kind="senaryo" />
+      </div>
+
+      <div className="flex-1 min-h-0 flex gap-3 items-center" onClick={() => setSelectedIdx(null)}>
+        <div className="shrink-0 flex flex-col items-center">
+          <div onClick={(e) => e.stopPropagation()}>
+            <svg viewBox="0 0 108 108" className="w-[120px] h-[120px] md:w-[148px] md:h-[148px]" role="img" aria-label="Fon kompozisyonu grafiği">
+            <circle cx={cx} cy={cy} r={r} fill="none" stroke="var(--color-rule)" strokeWidth="13" opacity={0.25} />
+            {HOME_FUND.layers.map((layer, i) => {
+              const len = (layer.sharePct / 100) * c;
+              const dasharray = `${len} ${c - len}`;
+              const dashoffset = -offset;
+              offset += len;
+              const isSelected = selectedIdx === i;
+              const isDimmed = selectedIdx !== null && !isSelected;
+              return (
+                <circle
+                  key={layer.id}
+                  cx={cx}
+                  cy={cy}
+                  r={r}
+                  fill="none"
+                  stroke={layer.color}
+                  strokeWidth={isSelected ? 15 : 13}
+                  strokeDasharray={dasharray}
+                  strokeDashoffset={dashoffset}
+                  strokeOpacity={isDimmed ? 0.28 : 1}
+                  transform={`rotate(-90 ${cx} ${cy})`}
+                  className="cursor-pointer transition-all duration-200"
+                  style={{ filter: isSelected ? "saturate(1.2)" : undefined }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedIdx(i);
+                  }}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`${layer.name}, ${layer.amount}, yüzde ${layer.sharePct}`}
+                  aria-pressed={isSelected}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setSelectedIdx(i);
+                    }
                   }}
                 />
-                <Bar dataKey="current" name="Mevcut" radius={[4, 4, 0, 0]} barSize={14}>
-                  {IMPACT_MATRIX.map((_, i) => (
-                    <Cell key={i} fill="oklch(0.82 0.02 145)" />
-                  ))}
-                </Bar>
-                <Bar dataKey="target" name="5 Yıllık Hedef" radius={[4, 4, 0, 0]} barSize={14}>
-                  {IMPACT_MATRIX.map((_, i) => (
-                    <Cell key={i} fill="var(--color-impact)" />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
+              );
+            })}
+            <text x={cx} y={cy - 4} textAnchor="middle" className="fill-ink text-[17px] font-bold pointer-events-none" style={{ fontFamily: "Inter, sans-serif" }}>
+              {amountValue}
+            </text>
+            <text x={cx} y={cy + 11} textAnchor="middle" className="fill-muted-foreground text-[8px] pointer-events-none" style={{ fontFamily: "Inter, sans-serif" }}>
+              {amountUnit}
+            </text>
+            {selectedIdx !== null && (
+              <text x={cx} y={cy + 22} textAnchor="middle" className="fill-water text-[8px] font-semibold pointer-events-none" style={{ fontFamily: "Inter, sans-serif" }}>
+                %{selected!.sharePct}
+              </text>
+            )}
+            </svg>
           </div>
-          <div className="flex gap-4 mt-2 justify-center">
-            <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
-              <div className="w-3 h-3 rounded-sm bg-[oklch(0.82_0.02_145)]" /> Mevcut Durum
+          <p className="text-[9px] text-muted-foreground text-center leading-tight max-w-[148px] mt-1">{HOME_FUND.note}</p>
+        </div>
+
+        <div className="flex-1 min-w-0 flex flex-col justify-center min-h-0">
+          {selected ? (
+            <div
+              className="rounded-lg border border-rule bg-surface-2 p-3 transition-colors duration-200"
+              style={{ borderColor: `${selected.color}33` }}
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: selected.color }} />
+                <h3 className="font-semibold text-[11px] md:text-xs text-ink leading-tight">{selected.name}</h3>
+              </div>
+              <p className="font-display text-base md:text-lg text-ink leading-none">
+                {selected.amount}
+                <span className="text-muted-foreground text-sm font-normal ml-1.5">· %{selected.sharePct}</span>
+              </p>
+              <p className="mt-2 text-[10px] text-muted-foreground leading-relaxed">{selected.description}</p>
             </div>
-            <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
-              <div className="w-3 h-3 rounded-sm bg-impact" /> 5 Yıllık Hedef
+          ) : (
+            <div className="rounded-lg border border-rule bg-surface-2 p-3">
+              <h3 className="font-semibold text-[11px] md:text-xs text-ink leading-tight">{HOME_FUND.centerLabel}</h3>
+              <p className="font-display text-base md:text-lg text-ink leading-none mt-2">
+                {HOME_FUND.total} {HOME_FUND.unit}
+              </p>
+              <p className="mt-2 text-[10px] text-muted-foreground leading-relaxed">
+                Beş kaynak kanalından oluşan temsili Faz 1 finansman yapısı. Dilime tıklayarak detayları görüntüleyin.
+              </p>
             </div>
-          </div>
+          )}
         </div>
       </div>
+    </div>
+  );
+}
 
-      {/* CTA to details */}
-      <div className="dash-card p-8 text-center">
-        <div className="eyebrow mb-3">Tam Sunum</div>
-        <h2 className="text-xl font-semibold text-ink mb-2">
-          Kriz analizi, finansal mimari ve senaryolar
-        </h2>
-        <p className="text-sm text-muted-foreground max-w-lg mx-auto mb-6">
-          Tüm bölümleri kaydırılabilir sunum formatında inceleyin: kriz verileri,
-          GDAF modeli, yıl simülasyonu, lojistik ve teknik ek.
-        </p>
-        <Link
-          to="/detay"
-          className="inline-flex flex-col items-center gap-2 group"
-        >
-          <span className="px-6 py-3 bg-primary text-primary-foreground text-sm font-medium rounded-lg hover:bg-primary/90 transition-colors">
-            Ayrıntıları Gör
-          </span>
-          <ChevronDown className="w-5 h-5 text-water animate-bounce group-hover:text-primary transition-colors" />
-        </Link>
+function ModelChainPanel() {
+  return (
+    <div className="dash-card p-3 md:p-4 h-full flex flex-col min-h-0">
+      <h2 className="font-display text-xs md:text-sm text-ink shrink-0 mb-2">Model mantığı</h2>
+
+      <div className="flex-1 min-h-0 flex items-center gap-0.5 md:gap-1">
+        {HOME_MODEL_CHAIN.map((step, i) => {
+          const Icon = CHAIN_ICONS[step.icon];
+          return (
+            <div key={step.id} className="flex items-center flex-1 min-w-0">
+              <div className="flex-1 flex flex-col items-center text-center min-w-0 px-0.5">
+                <div className="home-chain-node mb-1.5">
+                  <Icon className="w-5 h-5 md:w-[1.35rem] md:h-[1.35rem] text-water" strokeWidth={1.75} />
+                </div>
+                <div className="font-semibold text-[9px] md:text-[10px] text-ink leading-tight">{step.title}</div>
+                <div className="text-[7px] md:text-[8px] text-muted-foreground mt-0.5 leading-tight line-clamp-2">
+                  {step.detail}
+                </div>
+              </div>
+              {i < HOME_MODEL_CHAIN.length - 1 && (
+                <ArrowRight className="w-4 h-4 md:w-[1.125rem] md:h-[1.125rem] text-water/30 shrink-0" strokeWidth={1.5} />
+              )}
+            </div>
+          );
+        })}
       </div>
+    </div>
+  );
+}
+
+function CrisisStrip() {
+  return (
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 shrink-0">
+      {HOME_CRISIS_STRIP.map((item) => {
+        const Icon = CRISIS_ICONS[item.icon];
+        return (
+          <div key={item.label} className="dash-card px-3 py-2.5 flex items-center gap-2.5 min-h-0">
+            <div className="w-8 h-8 rounded-lg bg-risk/8 flex items-center justify-center shrink-0">
+              <Icon className="w-4 h-4 text-risk" strokeWidth={1.75} />
+            </div>
+            <p className="text-[10px] md:text-[11px] leading-snug min-w-0">
+              <span className={`font-display font-bold text-sm md:text-base ${item.tone === "risk" ? "text-risk" : "text-[var(--finance-ink)]"}`}>
+                {item.value}{" "}
+              </span>
+              <span className="text-muted-foreground">{item.label}</span>
+            </p>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function ImpactRow() {
+  return (
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 min-h-0 flex-1 h-full">
+      {HOME_IMPACT.items.map((item) => {
+        const Icon = IMPACT_ICONS[item.icon];
+        return (
+          <div key={item.id} className="dash-card p-4 md:p-5 h-full flex items-center justify-center min-h-0">
+            <div className="flex items-start gap-3 md:gap-4">
+              <div className="w-11 h-11 md:w-12 md:h-12 rounded-lg bg-[#E1F5EE] flex items-center justify-center shrink-0 mt-0.5">
+                <Icon className="w-6 h-6 md:w-7 md:h-7 text-water" strokeWidth={1.75} />
+              </div>
+              <div className="min-w-0 text-left">
+                <div className="font-display font-bold text-water text-lg md:text-xl lg:text-2xl leading-none">
+                  {item.prefix}
+                  {item.value}
+                </div>
+                <p className="mt-1.5 text-sm md:text-base text-foreground leading-snug">{item.text}</p>
+                {item.sub && <p className="text-xs md:text-sm text-muted-foreground mt-1 leading-tight">{item.sub}</p>}
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+export function Dashboard() {
+  return (
+    <div className="h-full min-h-0 grid grid-rows-[minmax(0,1.15fr)_auto_minmax(0,1fr)_minmax(0,0.9fr)] gap-2 overflow-hidden">
+      {/* 1) Hero + Su krizi */}
+      <section className="min-h-0 grid lg:grid-cols-2 gap-2">
+        <HeroCard />
+        <WaterCrisisCard />
+      </section>
+
+      {/* 2) Kriz ölçeği */}
+      <CrisisStrip />
+
+      {/* 3) Model bir bakışta + Model mantığı */}
+      <section className="min-h-0 grid lg:grid-cols-2 gap-2">
+        <FundPanel />
+        <ModelChainPanel />
+      </section>
+
+      {/* 4) Etki vurguları */}
+      <section className="min-h-0 flex flex-col h-full">
+        <ImpactRow />
+      </section>
     </div>
   );
 }
