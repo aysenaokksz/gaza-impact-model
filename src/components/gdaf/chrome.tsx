@@ -5,10 +5,13 @@ import { HUB_NAV, SITE } from "@/data/site-data";
 export function Logo({ compact = false }: { compact?: boolean }) {
   return (
     <Link to="/" className="flex items-center gap-3 group">
-      <div className="w-9 h-9 rounded-lg overflow-hidden flex shrink-0 shadow-sm">
-        <div className="w-1/3 bg-[#2C2C2A]" />
-        <div className="w-1/3 bg-[#E24B4A]" />
-        <div className="w-1/3 bg-[#1D9E75]" />
+      <div className="w-9 h-9 rounded-lg overflow-hidden flex shrink-0 shadow-sm border border-rule/60">
+        <svg viewBox="0 0 36 36" className="w-full h-full" aria-hidden>
+          <rect x="0" y="0" width="36" height="12" fill="#000000" />
+          <rect x="0" y="12" width="36" height="12" fill="#FFFFFF" />
+          <rect x="0" y="24" width="36" height="12" fill="#007A3D" />
+          <path d="M0 0 L13 18 L0 36 Z" fill="#CE1126" />
+        </svg>
       </div>
       {!compact && (
         <div className="leading-tight">
