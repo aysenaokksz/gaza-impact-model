@@ -6,10 +6,24 @@
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
+const githubPagesBase = process.env.VITE_BASE_PATH?.trim() || "/";
+
 export default defineConfig({
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
     server: { entry: "server" },
+    prerender: {
+      enabled: true,
+      crawlLinks: true,
+      autoStaticPathsDiscovery: true,
+      autoSubfolderIndex: true,
+      failOnError: true,
+    },
+  },
+  // Static GitHub Pages deploy — no Nitro server bundle.
+  nitro: false,
+  vite: {
+    base: githubPagesBase,
   },
 });
